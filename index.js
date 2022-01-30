@@ -14,14 +14,19 @@ dbConnection();
 app.use(cors());
 
 //Directorio Publico
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "public")));
 
 //Lectura y parseo del body
 app.use(express.json());
 
 //Rutas
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/events", require("./routes/events")); 
+app.use("/api/events", require("./routes/events"));
+
+//Si no encuntra alguna ruta de las anteriores redirige a la ruta index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => {
