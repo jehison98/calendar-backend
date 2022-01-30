@@ -24,7 +24,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
 
 //Si no encuntra alguna ruta de las anteriores redirige a la ruta index.html
-app.get("*", (req, res) => {
+app.use(function (req, res) {
+  // Invalid request
   res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
 
